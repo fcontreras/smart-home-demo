@@ -1,18 +1,20 @@
-#ifndef LED_H
-#define LED_H
+#ifndef MOTION_SENSOR_H
+#define MOTION_SENSOR_H
 
 #include <Arduino.h>
 #include "../Component.h"
 #include "../../services/MQTTHandler.h"
 
-class Led : public Component {
+class MotionSensor : public Component {
   private:
-    const byte pin = 12;
+    const byte pin = 14;
+    unsigned long previousMillis = 0;
+    const long interval = 500;
+    int previousVal = -1;
+    void startReading();
 
   public:
-    Led();
-    void on();
-    void off();
+    MotionSensor();
 
     void init() override;
     void handleMessage(const String& topic, const String& message) override;

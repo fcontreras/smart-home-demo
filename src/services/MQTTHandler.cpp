@@ -55,7 +55,9 @@ void MQTTHandler::subscribe(const char* topic) {
 }
 
 void MQTTHandler::publish(const char* topic, const char* message) {
+  if (mqttClient.connected()) {
     mqttClient.publish(topic, message);
+  }
 }
 
 void MQTTHandler::onMessageReceived(char* topic, byte* payload, unsigned int length) {
@@ -63,7 +65,6 @@ void MQTTHandler::onMessageReceived(char* topic, byte* payload, unsigned int len
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];
     }
-
 
     int i = 0;
     while(components[i] != nullptr) {

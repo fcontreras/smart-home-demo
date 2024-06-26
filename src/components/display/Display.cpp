@@ -7,7 +7,7 @@ static const char* topicsToListen[] = {
 };
 
 Display::Display()
-  : mylcd(0x27, 16, 2), mqttHandler(nullptr) {}
+  : mylcd(0x27, 16, 2) {}
 
 void Display::init() {
     mylcd.init();
@@ -40,7 +40,7 @@ void Display::sm(const String m, const int d) {
 }
 
 void Display::handleMessage(const String& topic, const String& message) {
-    if (topic == String(mqttHandler->getMqttId()) + "/display/message") {
+    if (topic == String(this->mqttHandler->getMqttId()) + "/display/message") {
         sm(message);
     }
 }
@@ -48,3 +48,5 @@ void Display::handleMessage(const String& topic, const String& message) {
 const char** Display::getSubscribeTopics() {
     return topicsToListen;
 }
+
+void Display::loop() {}

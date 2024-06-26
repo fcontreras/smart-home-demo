@@ -1,16 +1,19 @@
-#ifndef LED_H
-#define LED_H
+#ifndef FAN_H
+#define FAN_H
 
 #include <Arduino.h>
 #include "../Component.h"
 #include "../../services/MQTTHandler.h"
 
-class Led : public Component {
+class Fan : public Component {
   private:
-    const byte pin = 12;
+    const byte pinA = 19;
+    const byte pinB = 18;
+    int previousOnVal = -1;
+    void setSpeed(int val);
 
   public:
-    Led();
+    Fan();
     void on();
     void off();
 

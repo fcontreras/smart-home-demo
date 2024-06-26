@@ -1,8 +1,13 @@
 #include "Component.h"
 #include "../services/MQTTHandler.h"
+#include "display/Display.h"
 
 void Component::setMQTTHandler(MQTTHandler* handler) {
-    mqttHandler = handler;
+  mqttHandler = handler;
+}
+
+void Component::setDisplay(Display* d) {
+  display = d;
 }
 
 void Component::subscribeToTopics() {

@@ -1,3 +1,4 @@
+#include <ArduinoJson.h>
 #include "Led.h"
 
 static const char* topicsToListen[] = {
@@ -5,7 +6,7 @@ static const char* topicsToListen[] = {
   nullptr
 };
 
-Led::Led() : pin(12), mqttHandler(nullptr) {}
+Led::Led() {}
 
 void Led::init() {
     pinMode(pin, OUTPUT);
@@ -14,16 +15,34 @@ void Led::init() {
 
 void Led::on() {
     digitalWrite(pin, HIGH);
-    // mqttHandler->publish("led/status", "on");
+    unsigned long currentMillis = millis();
+
+    // StaticJsonDocument<1000> doc;
+    // doc["status"] = "on";
+    // doc["time"] = currentMillis;
+
+    // char jsonBuffer[1000];
+    // size_t n = serializeJson(doc, jsonBuffer);
+    
+    // publishMessage("led/status", jsonBuffer);
 }
 
 void Led::off() {
     digitalWrite(pin, LOW);
-    // mqttHandler->publish("led/status", "off");
+    unsigned long currentMillis = millis();
+
+    // StaticJsonDocument<1000> doc;
+    // doc["status"] = "off";
+    // doc["time"] = currentMillis;
+
+    // char jsonBuffer[1000];
+    // size_t n = serializeJson(doc, jsonBuffer);
+    
+    // publishMessage("led/status", jsonBuffer);
 }
 
 void Led::handleMessage(const String& topic, const String& message) {
-    if (topic == String(mqttHandler->getMqttId()) + "/led/power") {
+    if (topic == String(this->mqttHandler->getMqttId()) + "/led/power") {
         if (message.equalsIgnoreCase("on")) {
             on();
         } else if (message.equalsIgnoreCase("off")) {
@@ -35,3 +54,5 @@ void Led::handleMessage(const String& topic, const String& message) {
 const char** Led::getSubscribeTopics() {
     return topicsToListen;
 }
+
+void Led::loop() {}

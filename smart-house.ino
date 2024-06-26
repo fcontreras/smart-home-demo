@@ -3,22 +3,36 @@
 #include <PubSubClient.h>
 #include <src/arduino-secrets>
 
-#include <src/components/led/Led.h>
-#include <src/components/display/Display.h>
-#include <src/services/MQTTHandler.h>
+//Components
+#include "src/components/led/Led.h"
+#include "src/components/display/Display.h"
+#include "src/components/motion/MotionSensor.h"
+#include "src/components/fan/Fan.h"
+
+//Services
+#include "src/services/MQTTHandler.h"
 
 // Components
 Led led;
 Display display;
-Component* components[] = { &led, &display, nullptr }; // Array to hold components
+MotionSensor motionSensor;
+Fan fan;
+Component* components[] = { &led, &motionSensor, &fan, nullptr }; // Array to hold components
 
 // MQTT Handler
 MQTTHandler mqttHandler(components, &display);
 
 void setup() {
+    Serial.begin(9600);
+
     // Initialize components
-    led.init();
     display.init();
+    int i = 0;
+    while(components[i] != nullptr) {
+      components[i]->init();
+      components[i]->setDisplay(&display);
+      i++;
+    }
 
     // Connect to WiFi
     mqttHandler.connectToWifi(wifi_ssid, wifi_secret);
@@ -33,4 +47,12 @@ void setup() {
 void loop() {
     // Handle MQTT loop
     mqttHandler.loop();
+    
+    // Loop components
+    int i = 0;
+    while(components[i] != nullptr) {
+      components[i]->loop();
+      i++;
+    }
+
 }

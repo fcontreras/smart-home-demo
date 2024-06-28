@@ -6,7 +6,7 @@ to control it externally.
 ## How to run this
 In order to run this, you need to:
 1. Update the settings.h file with a unique ID for your smart home (since this example uses the public mosquitto test server).
-2. Create an arduino-secrets file with the following content:
+2. Create an arduino-secrets.h file with the following content:
 ```
 //WiFi Consts
 #define wifi_ssid "YOUR WIFI SSID"
@@ -17,4 +17,5 @@ In order to run this, you need to:
 ## Disclaimer
 This project was made for educational proposes, use it at your own risk.
 
-
+## Troubleshooting
+You might find an issue with "'ledcSetup' was not declared in this scope". This is because the libraries in used for this project are very old (I might update them at some point but for now it is like this) So to solve it make sure that the board you installed in the board manager for the ESP32 is version 2.x.

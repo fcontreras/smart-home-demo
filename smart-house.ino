@@ -10,6 +10,7 @@
 #include "src/components/fan/Fan.h"
 #include "src/components/servo/SmartServo.h"
 #include "src/components/temp_hum/TemperatureHumiditySensor.h"
+#include "src/components/raindrop/RaindropSensor.h"
 
 //Services
 #include "src/services/MQTTHandler.h"
@@ -22,7 +23,8 @@ Fan fan;
 SmartServo doorServo(13, "door/position");
 SmartServo windowServo(5, "window/position");
 TemperatureHumiditySensor tempHumSensor;
-Component* components[] = { &led, &motionSensor, &fan, &doorServo, &windowServo, &tempHumSensor, nullptr }; // Array to hold components
+RaindropSensor raindropSensor;
+Component* components[] = { &led, &motionSensor, &fan, &doorServo, &windowServo, &tempHumSensor, &raindropSensor, nullptr }; // Array to hold components
 
 // MQTT Handler
 MQTTHandler mqttHandler(components, &display);

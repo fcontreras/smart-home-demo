@@ -1,22 +1,20 @@
-#ifndef TH_SENSOR_H
-#define TH_SENSOR_H
+#ifndef RAINDROP_SENSOR_H
+#define RAINDROP_SENSOR_H
 
 #include <Arduino.h>
 #include "../Component.h"
 #include "../../services/MQTTHandler.h"
-#include "xht11.h"
 
-class TemperatureHumiditySensor : public Component {
+class RaindropSensor : public Component {
   private:
+    const byte pin = 34;
     unsigned long previousMillis = 0;
     const long interval = 500;
-    int previousTempVal = 0;
-    int previousHumVal = 0;
-    xht11 xht;
+    int previousVal = -1;
     void startReading();
 
   public:
-    TemperatureHumiditySensor();
+    RaindropSensor();
 
     void init() override;
     void handleMessage(const String& topic, const String& message) override;
@@ -24,4 +22,4 @@ class TemperatureHumiditySensor : public Component {
     void loop() override;
 };
 
-#endif // TH_SENSOR_H
+#endif // RAINDROP_SENSOR_H

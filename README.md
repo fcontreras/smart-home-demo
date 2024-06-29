@@ -18,4 +18,6 @@ In order to run this, you need to:
 This project was made for educational proposes, use it at your own risk.
 
 ## Troubleshooting
-You might find an issue with "'ledcSetup' was not declared in this scope". This is because the libraries in used for this project are very old (I might update them at some point but for now it is like this) So to solve it make sure that the board you installed in the board manager for the ESP32 is version 2.x.
+You might find an issue with "'ledcSetup' was not declared in this scope". This is because the libraries in used for this project are very old (I might update them at some point but for now it is like this).
+So, to solve it make sure that the board you installed in the board manager for the ESP32 is version 2.x. refer to someone mentioning this on github [here](https://github.com/espressif/arduino-esp32/issues/9510)
+and the migration guide where the breaking changes are explained [here](https://docs.espressif.com/projects/arduino-esp32/en/latest/migration_guides/2.x_to_3.0.html#ledc)

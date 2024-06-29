@@ -8,7 +8,7 @@
 #include "src/components/display/Display.h"
 #include "src/components/motion/MotionSensor.h"
 #include "src/components/fan/Fan.h"
-#include "src/components/servo/WindowServo.h"
+#include "src/components/servo/SmartServo.h"
 
 //Services
 #include "src/services/MQTTHandler.h"
@@ -18,8 +18,9 @@ Led led;
 Display display;
 MotionSensor motionSensor;
 Fan fan;
-WindowServo windowServo;
-Component* components[] = { &led, &motionSensor, &fan, &windowServo, nullptr }; // Array to hold components
+SmartServo doorServo(13, "door/position");
+SmartServo windowServo(5, "window/position");
+Component* components[] = { &led, &motionSensor, &fan, &doorServo, &windowServo, nullptr }; // Array to hold components
 
 // MQTT Handler
 MQTTHandler mqttHandler(components, &display);

@@ -12,6 +12,7 @@
 #include "src/components/temp_hum/TemperatureHumiditySensor.h"
 #include "src/components/raindrop/RaindropSensor.h"
 #include "src/components/buzzer/Buzzer.h"
+#include "src/components/pixel/Pixel.h"
 
 //Services
 #include "src/services/MQTTHandler.h"
@@ -26,7 +27,8 @@ SmartServo windowServo(5, "window/position");
 TemperatureHumiditySensor tempHumSensor;
 RaindropSensor raindropSensor;
 Buzzer buzzer;
-Component* components[] = { &led, &motionSensor, &fan, &doorServo, &windowServo, &tempHumSensor, &raindropSensor, &buzzer, nullptr }; // Array to hold components
+Pixel pixel;
+Component* components[] = { &led, &motionSensor, &fan, &doorServo, &windowServo, &tempHumSensor, &raindropSensor, &buzzer, &pixel, nullptr }; // Array to hold components
 
 // MQTT Handler
 MQTTHandler mqttHandler(components, &display);
@@ -36,10 +38,12 @@ void setup() {
 
     // Initialize components
     display.init();
+    // pixel.setDisplay(&display);
+    // pixel.init();
     int i = 0;
     while(components[i] != nullptr) {
-      components[i]->init();
       components[i]->setDisplay(&display);
+      components[i]->init();
       i++;
     }
 
@@ -63,5 +67,5 @@ void loop() {
       components[i]->loop();
       i++;
     }
-
+    // pixel.loop();
 }

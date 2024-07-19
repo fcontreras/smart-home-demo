@@ -11,7 +11,6 @@ class GasSensor : public Component {
     unsigned long previousMillis = 0;
     const long interval = 500;
     int previousVal = -1;
-    void startReading();
 
   public:
     GasSensor();

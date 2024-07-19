@@ -14,6 +14,8 @@
 #include "src/components/buzzer/Buzzer.h"
 #include "src/components/pixel/Pixel.h"
 #include "src/components/gas/GasSensor.h"
+#include "src/components/reader/CardReader.h"
+#include "src/components/button/Button.h"
 
 //Services
 #include "src/services/MQTTHandler.h"
@@ -30,7 +32,12 @@ RaindropSensor raindropSensor;
 Buzzer buzzer;
 Pixel pixel;
 GasSensor gasSensor;
-Component* components[] = { &led, &motionSensor, &fan, &doorServo, &windowServo, &tempHumSensor, &raindropSensor, &buzzer, &pixel, &gasSensor, nullptr }; // Array to hold components
+CardReader cardReader;
+Button button1(16, "button1");
+Button button2(27, "button2");
+
+Component* components[] = { &led, &motionSensor, &fan, &doorServo, &windowServo, &tempHumSensor,
+ &raindropSensor, &buzzer, &pixel, &gasSensor, &cardReader, &button1, &button2, nullptr }; // Array to hold components
 
 // MQTT Handler
 MQTTHandler mqttHandler(components, &display);

@@ -14,6 +14,7 @@ void MQTTHandler::init() {
       components[i]->setMQTTHandler(this);
       i++;
     }
+    display->setMQTTHandler(this);
 }
 
 void MQTTHandler::loop() {
@@ -39,6 +40,7 @@ void MQTTHandler::connectToMqttServer() {
             display->sm("MQTT Connected");
 
             int i = 0;
+            display->subscribeToTopics();
             while(components[i] != nullptr) {
               components[i]->subscribeToTopics();
               i++;
@@ -67,6 +69,7 @@ void MQTTHandler::onMessageReceived(char* topic, byte* payload, unsigned int len
     }
 
     int i = 0;
+    display->handleMessage(String(topic), message);
     while(components[i] != nullptr) {
       components[i]->handleMessage(String(topic), message);
       i++;

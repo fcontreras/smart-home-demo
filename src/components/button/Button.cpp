@@ -1,39 +1,38 @@
+#include <ArduinoJson.h>
 #include "Button.h"
 
-Button::Button(byte pin) {
+Button::Button(byte pin, const String& buttonId) {
   this->pin = pin;
-  lastReading = LOW;
-  init();
+  this->buttonId = buttonId;
 }
 
 void Button::init() {
   pinMode(pin, INPUT);
-  update();
 }
 
-void Button::update() {
-    // You can handle the debounce of the button directly
-    // in the class, so you don't have to think about it
-    // elsewhere in your code
-    byte newReading = digitalRead(pin);
-    
-    if (newReading != lastReading) {
-      lastDebounceTime = millis();
+void Button::handleMessage(const String& topic, const String& message) { }
+
+const char** Button::getSubscribeTopics() {
+  static const char* topics[] = { nullptr }; // No topics to subscribe to
+  return topics;
+}
+
+void Button::loop() {
+  byte reading = digitalRead(pin);
+  unsigned long currentMillis = millis();
+
+  if (reading == LOW) { //We just care about pressed
+    if (currentMillis - previousMillis >= interval) {
+      previousMillis = currentMillis;
+
+      StaticJsonDocument<1000> doc;
+      doc["id"] = buttonId;
+      doc["time"] = millis();
+
+      char jsonBuffer[1000];
+      size_t n = serializeJson(doc, jsonBuffer);
+
+      publishMessage("button/" + buttonId + "/pressed", jsonBuffer);
     }
-
-    if (millis() - lastDebounceTime > debounceDelay) {
-      // Update the 'state' attribute only if debounce is checked
-      state = newReading;
-    }
-
-    lastReading = newReading;
-}
-
-byte Button::getState() {
-  update();
-  return state;
-}
-
-bool Button::isPressed() {
-  return (getState() == HIGH);
+  }
 }

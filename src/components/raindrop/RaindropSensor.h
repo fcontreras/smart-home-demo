@@ -9,7 +9,7 @@ class RaindropSensor : public Component {
   private:
     const byte pin = 34;
     unsigned long previousMillis = 0;
-    const long interval = 500;
+    const long interval = 2000;
     int previousVal = -1;
     void startReading();
 

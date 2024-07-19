@@ -2,24 +2,24 @@
 #define MY_BUTTON_H
 
 #include <Arduino.h>
+#include "../Component.h"
+#include "../../services/MQTTHandler.h"
 
-class Button {
+class Button : public Component {
   
   private:
+    String buttonId;
     byte pin;
-    byte state;
-    byte lastReading;
-    unsigned long lastDebounceTime = 0;
-    unsigned long debounceDelay = 50;
+    unsigned long previousMillis = 0;
+    const long interval = 1000;
     
   public:
-    Button(byte pin);
+    Button(byte pin, const String& buttonId);
 
-    void init();
-    void update();
-
-    byte getState();
-    bool isPressed();
+    void init() override;
+    void handleMessage(const String& topic, const String& message) override;
+    const char** getSubscribeTopics() override;
+    void loop() override;
 };
 
 #endif

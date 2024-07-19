@@ -19,15 +19,30 @@ void TemperatureHumiditySensor::loop() {
       previousHumVal = dht[0];
       previousTempVal = dht[2];
 
+      //publish all
       StaticJsonDocument<1000> doc;
       doc["temperature"] = dht[2];
       doc["humidity"] = dht[0];
       doc["time"] = currentMillis;
-
       char jsonBuffer[1000];
       size_t n = serializeJson(doc, jsonBuffer);
-
       publishMessage("temp_hum/status", jsonBuffer);
+
+      //Publish temp
+      StaticJsonDocument<1000> tempDoc;
+      doc["temperature"] = dht[2];
+      doc["time"] = currentMillis;
+      char tempJsonBuffer[1000];
+      serializeJson(tempDoc, tempJsonBuffer);
+      publishMessage("temp_hum/temperature/status", tempJsonBuffer);
+      
+      //Publish Hum
+      StaticJsonDocument<1000> humDoc;
+      doc["humidity"] = dht[0];
+      doc["time"] = currentMillis;
+      char humJsonBuffer[1000];
+      serializeJson(humDoc, humJsonBuffer);
+      publishMessage("temp_hum/humidty/status", humJsonBuffer);
     }
   }
 }

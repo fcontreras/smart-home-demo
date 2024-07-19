@@ -9,7 +9,7 @@
 class TemperatureHumiditySensor : public Component {
   private:
     unsigned long previousMillis = 0;
-    const long interval = 500;
+    const long interval = 2000;
     int previousTempVal = 0;
     int previousHumVal = 0;
     xht11 xht;

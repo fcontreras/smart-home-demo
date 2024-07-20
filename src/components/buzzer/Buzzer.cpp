@@ -39,12 +39,12 @@ void Buzzer::birthday() {
 }
 
 void Buzzer::bip() {
-  tone(pin, 250)
+  tone(pin, 900, 250, 0);
   noTone(pin, 0);
 }
 
 void Buzzer::longBip() {
-  tone(pin, 5000)
+  tone(pin, 900, 4000, 0);
   noTone(pin, 0);
 }
 

@@ -9,6 +9,8 @@ class Buzzer : public Component {
   private:
     const byte pin = 25;
     void birthday();
+    void bip();
+    void longBip();
 
   public:
     Buzzer();
